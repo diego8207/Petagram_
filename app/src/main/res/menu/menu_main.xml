@@ -10,11 +10,16 @@
         android:title="" />
 
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/mContacto"
         android:orderInCategory="100"
-        android:title="@string/Petagram"
-        app:showAsAction="never" />
+        android:title="@string/menu_contacto"
+         />
 
+    <item
+        android:id="@+id/mAcercaDe"
+        android:orderInCategory="100"
+        android:title="@string/menu_acerca_de"
+        />
 
 
 </menu>

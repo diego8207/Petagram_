@@ -6,8 +6,11 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -22,7 +25,7 @@ public class MascotasActivity extends AppCompatActivity {
         setContentView(R.layout.activity_mascotas);
         Toolbar miActionBar = (Toolbar) findViewById(R.id.miActionBar);
         miActionBar.setLogo(R.drawable.huella);
-        miActionBar.setTitle("                Petagram");
+        miActionBar.setTitle(R.string.Petagram);
         setSupportActionBar(miActionBar);
 
         listaMascotas = (RecyclerView) findViewById(R.id.rvMascotas);
@@ -33,6 +36,7 @@ public class MascotasActivity extends AppCompatActivity {
         listaMascotas.setLayoutManager(llm);
         inicializarListaMascotas();
         inicializarAdaptador();
+
     }
 
     public void inicializarListaMascotas(){
@@ -59,10 +63,20 @@ public class MascotasActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.favoritos:
-                Intent intent = new Intent(this, FavoritosActivity.class);
-                startActivity(intent);
-                return true;
+                Intent in1 = new Intent(this, FavoritosActivity.class);
+                startActivity(in1);
+                break;
+            case R.id.mContacto:
+                Intent in2 = new Intent(this, ContactoActivity.class);
+                startActivity(in2);
+                break;
+            case R.id.mAcercaDe:
+                Intent in3 = new Intent(this, AcercaActivity.class);
+                startActivity(in3);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 }
