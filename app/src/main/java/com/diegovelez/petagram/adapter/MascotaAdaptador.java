@@ -1,4 +1,4 @@
-package com.diegovelez.petagram;
+package com.diegovelez.petagram.adapter;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.diegovelez.petagram.pojo.Mascota;
+import com.diegovelez.petagram.R;
 
 import java.util.ArrayList;
 

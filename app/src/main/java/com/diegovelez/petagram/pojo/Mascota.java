@@ -1,4 +1,4 @@
-package com.diegovelez.petagram;
+package com.diegovelez.petagram.pojo;
 
 /**
  * Created by Diego Velez on 19/02/2017.

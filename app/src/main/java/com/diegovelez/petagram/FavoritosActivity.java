@@ -6,6 +6,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
+import com.diegovelez.petagram.adapter.MascotaAdaptador;
+import com.diegovelez.petagram.pojo.Mascota;
+
 import java.util.ArrayList;
 
 public class FavoritosActivity extends AppCompatActivity {
