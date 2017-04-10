@@ -76,7 +76,7 @@ public class ContactoActivity extends AppCompatActivity implements View.OnClickL
         // Apertura de la sesion en cuenta de correo
         session = Session.getDefaultInstance(props, new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("si.macrosystem@gmail.com", "@Max14396183");
+                return new PasswordAuthentication("si.macrosystem@gmail.com", "xxxxxxxxxxx"); //omito la clave por seguridad, mil disculpas.
             }
         });
     }
@@ -99,7 +99,7 @@ public class ContactoActivity extends AppCompatActivity implements View.OnClickL
                 StrictMode.setThreadPolicy(policy);
                 Message message = new MimeMessage(session);
                 message.setFrom(new InternetAddress("si.macrosystem@gmail.com"));
-                message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("xxxxxxxxxxxxxxxx"));
+                message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("si.macrosystem@gmail.com"));
                 message.setSubject("Petagram: "+nombre);
                 message.setContent(mensaje, "text/html; charset=utf-8");
                 Transport.send(message);
