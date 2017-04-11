@@ -41,8 +41,6 @@ public class PerfilFragment extends Fragment {
         circularImageView.setShadowRadius(15);
         circularImageView.setShadowColor(Color.BLUE);
 
-       // LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-        //llm.setOrientation(LinearLayoutManager.VERTICAL);
 
         GridLayoutManager glm = new GridLayoutManager(getActivity(), 3);
         rvListaMascotas.setLayoutManager(glm);
