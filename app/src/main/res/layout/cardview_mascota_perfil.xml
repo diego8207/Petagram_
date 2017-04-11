@@ -17,10 +17,10 @@
 
         <ImageView
             android:id="@+id/imgFoto"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:src="@drawable/mascota1"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginBottom="5dp"/>
 
         <FrameLayout
             android:layout_width="fill_parent"

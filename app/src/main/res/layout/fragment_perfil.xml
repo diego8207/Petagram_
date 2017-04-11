@@ -8,14 +8,18 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <ImageView
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        app:srcCompat="@drawable/mascota1"
-        android:id="@+id/imageView"
+    <com.mikhaellopez.circularimageview.CircularImageView
+        android:id="@+id/cimgPet"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_marginTop="10dp"
-        android:layout_gravity="center" />
-
+        android:layout_gravity="center"
+        android:src="@drawable/mascota1"
+        app:civ_border_color="#EEEEEE"
+        app:civ_border_width="4dp"
+        app:civ_shadow="true"
+        app:civ_shadow_radius="10"
+        app:civ_shadow_color="#8BC34A"/>
 
 
     <android.support.v7.widget.AppCompatTextView
