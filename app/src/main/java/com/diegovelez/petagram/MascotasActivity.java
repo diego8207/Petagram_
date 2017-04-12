@@ -1,21 +1,20 @@
 package com.diegovelez.petagram;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.diegovelez.petagram.adapter.MascotaAdaptador;
 import com.diegovelez.petagram.adapter.PageAdapter;
 import com.diegovelez.petagram.fragment.PerfilFragment;
 import com.diegovelez.petagram.fragment.RecyclerViewFragment;
-import com.diegovelez.petagram.pojo.Mascota;
 
 import java.util.ArrayList;
 
@@ -25,6 +24,8 @@ public class MascotasActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private SharedPreferences datos_compartidos;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,14 @@ public class MascotasActivity extends AppCompatActivity {
             toolbar.setTitle(R.string.Petagram);
             setSupportActionBar(toolbar);
         }
+
+        //Ejemplo de SharePreferences
+        datos_compartidos = getSharedPreferences("datos", Context.MODE_PRIVATE);
+        editor = datos_compartidos.edit();
+        editor.putString("usuario", "Dvargas");
+        editor.putString("fecha", "11/04/2017");
+        editor.commit();
+
     }
 
     //añadimos los fragmento al arreglo de Fragments

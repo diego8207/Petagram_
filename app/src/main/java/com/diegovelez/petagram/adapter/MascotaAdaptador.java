@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.diegovelez.petagram.db.ContructorMascotas;
 import com.diegovelez.petagram.pojo.Mascota;
 import com.diegovelez.petagram.R;
 
@@ -35,18 +36,23 @@ public class MascotaAdaptador extends RecyclerView.Adapter<MascotaAdaptador.Masc
     }
 
     @Override
-    public void onBindViewHolder(MascotaViewHolder mascotaViewHolder, int position) {
+    public void onBindViewHolder(final MascotaViewHolder mascotaViewHolder, int position) {
         final Mascota mascota = mascotas.get(position);
         mascotaViewHolder.imgFoto.setImageResource(mascota.getFoto());
         mascotaViewHolder.imgMegusta.setImageResource(mascota.getImgMegusta());
         mascotaViewHolder.imgCantRaiting.setImageResource(mascota.getImgCantRaiting());
         mascotaViewHolder.tvNombreMascota.setText(mascota.getNombre());
-        mascotaViewHolder.tvCantRaiting.setText(mascota.getCantLikes());
+        mascotaViewHolder.tvCantLikes.setText(String.valueOf(mascota.getCantLikes()));
 
         mascotaViewHolder.imgMegusta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(activity, "Diste Me Gusta a " + mascota.getNombre(), Toast.LENGTH_SHORT).show();
+                ContructorMascotas constructorMascotas = new ContructorMascotas(activity);
+                constructorMascotas.darLikeMascota(mascota);
+
+                mascotaViewHolder.tvCantLikes.setText(String.valueOf(constructorMascotas.obtenerLikesMascota(mascota)));
+
+                //Toast.makeText(activity, "Diste Me Gusta a " + mascota.getNombre(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -61,16 +67,16 @@ public class MascotaAdaptador extends RecyclerView.Adapter<MascotaAdaptador.Masc
         private ImageView imgFoto;
         private ImageView imgMegusta;
         private TextView tvNombreMascota;
-        private  TextView tvCantRaiting;
+        private  TextView tvCantLikes;
         private  ImageView imgCantRaiting;
 
         public MascotaViewHolder(View itemView) {
             super(itemView);
             imgFoto         = (ImageView) itemView.findViewById(R.id.imgFoto);
             imgMegusta      = (ImageView) itemView.findViewById(R.id.imgMegusta);
-            imgCantRaiting  = (ImageView) itemView.findViewById(R.id.imgCantRaiting);
+            imgCantRaiting  = (ImageView) itemView.findViewById(R.id.imgCantLikes);
             tvNombreMascota = (TextView) itemView.findViewById(R.id.tvNombreMascota);
-            tvCantRaiting   = (TextView) itemView.findViewById(R.id.tvCantRaiting);
+            tvCantLikes = (TextView) itemView.findViewById(R.id.tvCantLikes);
         }
 
 

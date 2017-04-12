@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import com.diegovelez.petagram.R;
 import com.diegovelez.petagram.adapter.MascotaAdaptador;
 import com.diegovelez.petagram.pojo.Mascota;
+import com.diegovelez.petagram.presentador.RecyclerViewFragmentPresenter;
+import com.diegovelez.petagram.presentador.iRecyclerViewFragmentPresenter;
 
 import java.util.ArrayList;
 
@@ -19,9 +21,10 @@ import java.util.ArrayList;
  * Created by Diego Velez on 10/04/2017.
  */
 
-public class RecyclerViewFragment extends Fragment {
+public class RecyclerViewFragment extends Fragment implements iRecyclerViewFragmentView {
     private ArrayList<Mascota> mascotas;
     private RecyclerView rvListaMascotas;
+    private iRecyclerViewFragmentPresenter presenter;
 
     @Nullable
     @Override
@@ -29,41 +32,28 @@ public class RecyclerViewFragment extends Fragment {
         //return super.onCreateView(inflater, container, savedInstanceState);
         //asociamos o inflamos un layout a un actity class
         View v = inflater.inflate(R.layout.fragment_recyclerview, container, false);
-
-
         rvListaMascotas = (RecyclerView) v.findViewById(R.id.rvMascotas);
+        presenter = new RecyclerViewFragmentPresenter(this, getContext());
+        return v;
+    }
 
+    @Override
+    public void generarLinearLayoutVertical() {
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
-
         rvListaMascotas.setLayoutManager(llm);
-        inicializarListaMascotas();
-        inicializarAdaptador();
-
-
-        return v;
-
-
     }
 
 
-    public void inicializarListaMascotas(){
-        mascotas = new ArrayList<Mascota>();
-        mascotas.add(new Mascota("Ronny", "23", R.drawable.mascota1, R.drawable.hueso_del_perro_50, R.drawable.hueso_del_perro_48));
-        mascotas.add(new Mascota("Docky", "15", R.drawable.mascota2, R.drawable.hueso_del_perro_50, R.drawable.hueso_del_perro_48));
-        mascotas.add(new Mascota("Ami", "12", R.drawable.mascota3, R.drawable.hueso_del_perro_50, R.drawable.hueso_del_perro_48));
-        mascotas.add(new Mascota("Bella", "18", R.drawable.mascota4, R.drawable.hueso_del_perro_50, R.drawable.hueso_del_perro_48));
-        mascotas.add(new Mascota("Luli", "26", R.drawable.mascota5, R.drawable.hueso_del_perro_50, R.drawable.hueso_del_perro_48));
-    }
-
-    public void inicializarAdaptador(){
+    @Override
+    public MascotaAdaptador crearAdaptador(ArrayList<Mascota> mascotas) {
         MascotaAdaptador adaptador = new MascotaAdaptador(mascotas, getActivity());
+        return adaptador;
+    }
+
+
+    @Override
+    public void inicializarAdaptador(MascotaAdaptador adaptador) {
         rvListaMascotas.setAdapter(adaptador);
     }
-
-
-
-
-
-
 }

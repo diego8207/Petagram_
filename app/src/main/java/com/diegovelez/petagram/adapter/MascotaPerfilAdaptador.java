@@ -35,7 +35,7 @@ public class MascotaPerfilAdaptador extends  RecyclerView.Adapter<MascotaPerfilA
         final Mascota mascota = mascotas.get(position);
         mascotaperfilviewholder.imgFoto.setImageResource(mascota.getFoto());
         mascotaperfilviewholder.imgCantRaiting.setImageResource(mascota.getImgCantRaiting());
-        mascotaperfilviewholder.tvCantRaiting.setText(mascota.getCantLikes());
+        mascotaperfilviewholder.tvCantRaiting.setText(String.valueOf(mascota.getCantLikes()));
     }
 
     @Override
@@ -53,8 +53,8 @@ public class MascotaPerfilAdaptador extends  RecyclerView.Adapter<MascotaPerfilA
         public mascotaPerfilViewHolder(View itemView) {
             super(itemView);
             imgFoto         = (ImageView) itemView.findViewById(R.id.imgFoto);
-            imgCantRaiting  = (ImageView) itemView.findViewById(R.id.imgCantRaiting);
-            tvCantRaiting   = (TextView) itemView.findViewById(R.id.tvCantRaiting);
+            imgCantRaiting  = (ImageView) itemView.findViewById(R.id.imgCantLikes);
+            tvCantRaiting   = (TextView) itemView.findViewById(R.id.tvCantLikes);
         }
 
 

@@ -5,18 +5,24 @@ package com.diegovelez.petagram.pojo;
  */
 
 public class Mascota {
+
+    private int id;
     private String nombre;
-    private String cantLikes;
+    private int cantLikes;
     private int foto;
     private int imgMegusta;
     private int imgCantRaiting;
 
-    public Mascota(String nombre, String cantLikes, int foto, int imgMegusta, int imgCantRaiting) {
+    public Mascota(String nombre, int cantLikes, int foto, int imgMegusta, int imgCantRaiting) {
         this.nombre = nombre;
         this.cantLikes = cantLikes;
         this.foto = foto;
         this.imgMegusta = imgMegusta;
         this.imgCantRaiting = imgCantRaiting;
+    }
+
+    public Mascota() {
+
     }
 
     public int getImgMegusta() {
@@ -43,19 +49,27 @@ public class Mascota {
         this.nombre = nombre;
     }
 
-    public String getCantLikes() {
-        return cantLikes;
-    }
-
-    public void setCantLikes(String cantLikes) {
-        this.cantLikes = cantLikes;
-    }
-
     public int getFoto() {
         return foto;
     }
 
     public void setFoto(int foto) {
         this.foto = foto;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getCantLikes() {
+        return cantLikes;
+    }
+
+    public void setCantLikes(int cantLikes) {
+        this.cantLikes = cantLikes;
     }
 }
