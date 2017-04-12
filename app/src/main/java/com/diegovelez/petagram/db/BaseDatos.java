@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.diegovelez.petagram.pojo.Mascota;
 
@@ -95,19 +96,33 @@ public class BaseDatos extends SQLiteOpenHelper {
     public ArrayList<Mascota> obtenerTodosLasMascotasOrdenadas(){
         ArrayList<Mascota> mascotas = new ArrayList<>();
 
-        String query = "SELECT mascotas." + ConstantesBaseDatos.TABLE_MASCOTAS_ID +
-                ", mascotas." + ConstantesBaseDatos.TABLE_MASCOTAS_NOMBRE +
-                ", mascotas." + ConstantesBaseDatos.TABLE_MASCOTAS_FOTO +
-                ", mascotas." + ConstantesBaseDatos.TABLE_MASCOTAS_IMG_ME_GUSTA +
-                ", mascotas." + ConstantesBaseDatos.TABLE_MASCOTAS_IMG_CANT_RAITING +
-                ", mascota_likes." + ConstantesBaseDatos.TABLE_LIKES_MASCOTA_NUMERO_LIKES +
-                " FROM  "+ ConstantesBaseDatos.TABLE_MASCOTAS + " , " + ConstantesBaseDatos.TABLE_LIKES_MASCOTA +
-                " WHERE mascota_likes." + ConstantesBaseDatos.TABLE_LIKES_MASCOTA_ID_MASCOTA + "= mascotas." + ConstantesBaseDatos.TABLE_MASCOTAS_ID +
-                " ORDER BY mascota_likes.numero_likes";
+
+
+        String query = "select mascotas.id, count(numero_likes) from mascotas inner join mascota_likes " +
+                "on mascotas.id = mascota_likes.id_mascota " +
+                "group by mascotas.id order by count(numero_likes) desc";
+
         SQLiteDatabase db = this.getWritableDatabase();
+
         Cursor registros = db.rawQuery(query, null);
 
-        while(registros.moveToNext()){
+        int limiteRegistros = 0;
+
+        for(registros.moveToFirst(); !registros.isAfterLast(); registros.moveToNext()) {
+            if (limiteRegistros <= 4) {
+                int idMascota = registros.getInt(0);
+                Mascota mascota = obtenerMascotaPorId(idMascota);
+                Log.i("nombre: ", mascota.getNombre() + " | Cant Likes: " + mascota.getCantLikes());
+
+                mascotas.add(mascota);
+
+                limiteRegistros++;
+            } else {
+                break;
+            }
+        }
+
+ /*       while(registros.moveToNext()){
             Mascota mascotaActual = new Mascota();
             mascotaActual.setId(registros.getInt(0));
             mascotaActual.setNombre(registros.getString(1));
@@ -117,10 +132,45 @@ public class BaseDatos extends SQLiteOpenHelper {
             mascotaActual.setCantLikes(registros.getInt(5));
             mascotas.add(mascotaActual);
         }
-
+*/
         db.close();
 
         return mascotas;
+    }
+
+
+    public Mascota obtenerMascotaPorId(int idmascota){
+
+        Mascota mascotaActual = new Mascota();
+
+        String query = "SELECT * FROM " + ConstantesBaseDatos.TABLE_MASCOTAS +
+                " WHERE " + ConstantesBaseDatos.TABLE_MASCOTAS_ID + " = " + idmascota;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor registros = db.rawQuery(query, null);
+
+        if(registros.moveToNext()){
+            mascotaActual.setId(registros.getInt(0));
+            mascotaActual.setNombre(registros.getString(1));
+            mascotaActual.setFoto(registros.getInt(3));
+            mascotaActual.setImgMegusta(registros.getInt(4));
+            mascotaActual.setImgCantRaiting(registros.getInt(5));
+
+            String queryLikes = "SELECT COUNT("+ConstantesBaseDatos.TABLE_LIKES_MASCOTA_NUMERO_LIKES+") as likes " +
+                    " FROM " + ConstantesBaseDatos.TABLE_LIKES_MASCOTA +
+                    " WHERE " + ConstantesBaseDatos.TABLE_LIKES_MASCOTA_ID_MASCOTA + "=" + idmascota;
+
+            Cursor registrosLikes = db.rawQuery(queryLikes, null);
+
+            if (registrosLikes.moveToNext()){
+                mascotaActual.setCantLikes(registrosLikes.getInt(0));
+            }else{
+                mascotaActual.setCantLikes(0);
+            }
+        }
+
+        db.close();
+
+        return mascotaActual;
     }
 
     public void insertarMascota(ContentValues contentValues){
