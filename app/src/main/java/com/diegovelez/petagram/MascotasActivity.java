@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.diegovelez.petagram.adapter.PageAdapter;
+import com.diegovelez.petagram.fragment.FavoritosFragment;
 import com.diegovelez.petagram.fragment.PerfilFragment;
 import com.diegovelez.petagram.fragment.RecyclerViewFragment;
 

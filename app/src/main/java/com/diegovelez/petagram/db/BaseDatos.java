@@ -95,14 +95,15 @@ public class BaseDatos extends SQLiteOpenHelper {
     public ArrayList<Mascota> obtenerTodosLasMascotasOrdenadas(){
         ArrayList<Mascota> mascotas = new ArrayList<>();
 
-        String query = "SELECT " + ConstantesBaseDatos.TABLE_MASCOTAS_ID +
-                ", " + ConstantesBaseDatos.TABLE_MASCOTAS_NOMBRE +
-                ", " + ConstantesBaseDatos.TABLE_MASCOTAS_FOTO +
-                ", " + ConstantesBaseDatos.TABLE_MASCOTAS_IMG_ME_GUSTA +
-                ", " + ConstantesBaseDatos.TABLE_MASCOTAS_IMG_CANT_RAITING +
-                " FROM  "+ ConstantesBaseDatos.TABLE_MASCOTAS + " INNER JOIN " + ConstantesBaseDatos.TABLE_LIKES_MASCOTA +
-                " ON " + ConstantesBaseDatos.TABLE_LIKES_MASCOTA_ID_MASCOTA + "=" + ConstantesBaseDatos.TABLE_MASCOTAS_ID +
-                " ORDER BY " + ConstantesBaseDatos.TABLE_LIKES_MASCOTA_NUMERO_LIKES;
+        String query = "SELECT mascotas." + ConstantesBaseDatos.TABLE_MASCOTAS_ID +
+                ", mascotas." + ConstantesBaseDatos.TABLE_MASCOTAS_NOMBRE +
+                ", mascotas." + ConstantesBaseDatos.TABLE_MASCOTAS_FOTO +
+                ", mascotas." + ConstantesBaseDatos.TABLE_MASCOTAS_IMG_ME_GUSTA +
+                ", mascotas." + ConstantesBaseDatos.TABLE_MASCOTAS_IMG_CANT_RAITING +
+                ", mascota_likes." + ConstantesBaseDatos.TABLE_LIKES_MASCOTA_NUMERO_LIKES +
+                " FROM  "+ ConstantesBaseDatos.TABLE_MASCOTAS + " , " + ConstantesBaseDatos.TABLE_LIKES_MASCOTA +
+                " WHERE mascota_likes." + ConstantesBaseDatos.TABLE_LIKES_MASCOTA_ID_MASCOTA + "= mascotas." + ConstantesBaseDatos.TABLE_MASCOTAS_ID +
+                " ORDER BY mascota_likes.numero_likes";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor registros = db.rawQuery(query, null);
 
@@ -110,22 +111,10 @@ public class BaseDatos extends SQLiteOpenHelper {
             Mascota mascotaActual = new Mascota();
             mascotaActual.setId(registros.getInt(0));
             mascotaActual.setNombre(registros.getString(1));
-            mascotaActual.setFoto(registros.getInt(3));
-            mascotaActual.setImgMegusta(registros.getInt(4));
-            mascotaActual.setImgCantRaiting(registros.getInt(5));
-
-            String queryLikes = "SELECT COUNT("+ConstantesBaseDatos.TABLE_LIKES_MASCOTA_NUMERO_LIKES+") as likes " +
-                    " FROM " + ConstantesBaseDatos.TABLE_LIKES_MASCOTA +
-                    " WHERE " + ConstantesBaseDatos.TABLE_LIKES_MASCOTA_ID_MASCOTA + "=" + mascotaActual.getId();
-
-            Cursor registrosLikes = db.rawQuery(queryLikes, null);
-
-            if (registrosLikes.moveToNext()){
-                mascotaActual.setCantLikes(registrosLikes.getInt(0));
-            }else{
-                mascotaActual.setCantLikes(0);
-            }
-
+            mascotaActual.setFoto(registros.getInt(2));
+            mascotaActual.setImgMegusta(registros.getInt(3));
+            mascotaActual.setImgCantRaiting(registros.getInt(4));
+            mascotaActual.setCantLikes(registros.getInt(5));
             mascotas.add(mascotaActual);
         }
 

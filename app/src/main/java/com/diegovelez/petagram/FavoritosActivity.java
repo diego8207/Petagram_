@@ -2,6 +2,8 @@ package com.diegovelez.petagram;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +12,8 @@ import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import com.diegovelez.petagram.adapter.MascotaAdaptador;
+import com.diegovelez.petagram.adapter.PageAdapter;
+import com.diegovelez.petagram.fragment.FavoritosFragment;
 import com.diegovelez.petagram.pojo.Mascota;
 
 import java.util.ArrayList;
@@ -17,8 +21,10 @@ import java.util.ArrayList;
 public class FavoritosActivity extends AppCompatActivity {
 
     private ArrayList<Mascota> mascotas;
-    private RecyclerView listaMascotas;
-    private SharedPreferences datos_compartidos;
+    private RecyclerView rvMascotasFav;
+    private SharedPreferences datos_compartidos; //es una prueba SharedPreferences
+    private Toolbar miActionBar;
+    private ViewPager viewPagerFav;
 
 
 
@@ -26,18 +32,25 @@ public class FavoritosActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favoritos);
-        Toolbar miActionBar = (Toolbar) findViewById(R.id.miActionBar);
-        miActionBar.setLogo(R.drawable.huella);
-        miActionBar.setTitle("   Petagram Favoritos");
-        setSupportActionBar(miActionBar);
 
-        listaMascotas = (RecyclerView) findViewById(R.id.rvMascotasFav);
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        listaMascotas.setLayoutManager(llm);
-        inicializarListaMascotas();
-        inicializarAdaptador();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        miActionBar = (Toolbar) findViewById(R.id.miActionBar);
+        viewPagerFav = (ViewPager) findViewById(R.id.viewPagerFav);
+
+        if (miActionBar != null){
+            miActionBar.setLogo(R.drawable.huella);
+            miActionBar.setTitle("   Petagram Favoritos");
+            setSupportActionBar(miActionBar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+        //metodo que permite agregar el FavoritosFragment en el viewPagerFav declarado
+        //de esta manera asociamos un activity a Fragments dinamicamente
+        setUpViewPager();
+
+
+        /*
+
+        */
 
         //Ejemplo de como Recuperar datos de un SharePrefereces
         datos_compartidos = getSharedPreferences("datos", Context.MODE_PRIVATE);
@@ -58,7 +71,17 @@ public class FavoritosActivity extends AppCompatActivity {
 
     public void inicializarAdaptador(){
         MascotaAdaptador adaptador = new MascotaAdaptador(mascotas, this);
-        listaMascotas.setAdapter(adaptador);
+        rvMascotasFav.setAdapter(adaptador);
+    }
+
+    private ArrayList<Fragment> agregarFragment(){
+        ArrayList<Fragment> fragments = new ArrayList<>();
+        fragments.add(new FavoritosFragment());
+        return  fragments;
+    }
+
+    private void setUpViewPager(){
+        viewPagerFav.setAdapter(new PageAdapter(getSupportFragmentManager(), agregarFragment()));
     }
 
 }

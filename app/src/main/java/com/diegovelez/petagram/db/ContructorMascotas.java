@@ -30,6 +30,21 @@ public class ContructorMascotas {
 
     }
 
+    public ArrayList<Mascota> obtenerDatosFavoritos(){
+
+        BaseDatos db = new BaseDatos(context);
+   /*     ArrayList<Mascota> mascotas = new ArrayList<Mascota>();
+        mascotas.add(new Mascota("Luli", 26, R.drawable.mascota5, R.drawable.hueso_del_perro_50, R.drawable.hueso_del_perro_48));
+        mascotas.add(new Mascota("Ronny", 23, R.drawable.mascota1, R.drawable.hueso_del_perro_50, R.drawable.hueso_del_perro_48));
+        mascotas.add(new Mascota("Bella", 18, R.drawable.mascota4, R.drawable.hueso_del_perro_50, R.drawable.hueso_del_perro_48));
+        mascotas.add(new Mascota("Docky", 15, R.drawable.mascota2, R.drawable.hueso_del_perro_50, R.drawable.hueso_del_perro_48));
+        mascotas.add(new Mascota("Ami", 12, R.drawable.mascota3, R.drawable.hueso_del_perro_50, R.drawable.hueso_del_perro_48));
+*/
+        return db.obtenerTodosLasMascotasOrdenadas();
+  //      return  mascotas;
+
+    }
+
 
     public void insertarCincoMascotas(BaseDatos db){
         ContentValues contentValues = new ContentValues();
@@ -83,5 +98,8 @@ public class ContructorMascotas {
         BaseDatos db = new BaseDatos(context);
         return db.obtenerLikesMascota(mascota);
     }
+
+
+
 
 }
